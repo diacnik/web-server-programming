@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #map {
+            height: 400px;
+            width: calc(100% - 10rem);
+            margin: 5rem;
+        }
+        #advice {
+            margin: 5rem;
+            font-size: 1.2rem;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button onclick="getAdvice()">Tell me about area</button>
+    <pre id="advice"></pre>
+    <script>
+        function initMap() {
+            var location = { lat: -34.397, lng: 150.644 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+    <script>
+        async function getAdvice() {
+            var apiKey = "YOUR_GEMINI_API_KEY";
+            var endpoint =
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" +
+                encodeURIComponent(apiKey);
+
+            var body = {
+                contents: [
+                    {
+                        role: "user",
+                        parts: [
+                            {
+                                text: "Give brief advice about this area: coastal city with markets and beaches."
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            var response = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+
+            var data = await response.json();
+            var text =
+                (data &&
+                    data.candidates &&
+                    data.candidates[0] &&
+                    data.candidates[0].content &&
+                    data.candidates[0].content.parts &&
+                    data.candidates[0].content.parts[0] &&
+                    data.candidates[0].content.parts[0].text) ||
+                "No advice returned.";
+
+            document.getElementById("advice").textContent = text;
+        }
+    </script>
+</body>
+</html>
