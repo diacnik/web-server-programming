@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrailConditions | Alerts</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">TrailConditions</div>
+        <ul>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="trails.html">Trail Board</a></li>
+          <li><a href="report.html">Report</a></li>
+          <li><a class="active" href="alerts.html">Alerts</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Regional alerts</h1>
+        <p>
+          Track weather shifts, closures, and air quality. Alerts are refreshed
+          by local stewards and emergency feeds.
+        </p>
+        <div class="chips">
+          <div class="chip">AQI 42 · Good</div>
+          <div class="chip">Next storm: 8 pm</div>
+          <div class="chip">Heat advisory: None</div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Active alerts</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Coastal Bluffs</h3>
+            <p>High tide flooding the lower switchbacks after 6 pm.</p>
+            <div class="status-pill caution">Caution</div>
+          </article>
+          <article class="card">
+            <h3>River Valley</h3>
+            <p>Bridge inspection underway. Expect detour signage.</p>
+            <div class="status-pill caution">Caution</div>
+          </article>
+          <article class="card">
+            <h3>South Basin</h3>
+            <p>Controlled burn scheduled tomorrow. Trails closed at dawn.</p>
+            <div class="status-pill closed">Closed</div>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Upcoming weather</h2>
+        <div class="list">
+          <article class="list-item">
+            <h3>Monday</h3>
+            <span>Light rain · 0.1 inch</span>
+            <p>Expect damp roots and slick bridge decking.</p>
+          </article>
+          <article class="list-item">
+            <h3>Tuesday</h3>
+            <span>Overcast · 64F</span>
+            <p>Great for long runs; carry a light shell.</p>
+          </article>
+          <article class="list-item">
+            <h3>Wednesday</h3>
+            <span>Clear · 69F</span>
+            <p>Fast trails, low humidity, cool mornings.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Alerts are informational. Follow all posted rules and local guidance.
+      </p>
+    </footer>
+  </body>
+</html>

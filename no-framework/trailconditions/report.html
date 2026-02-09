@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrailConditions | Report</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">TrailConditions</div>
+        <ul>
+          <li><a href="index.html">Overview</a></li>
+          <li><a href="trails.html">Trail Board</a></li>
+          <li><a class="active" href="report.html">Report</a></li>
+          <li><a href="alerts.html">Alerts</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Submit a condition report</h1>
+        <p>
+          Share what you saw in the last 12 hours. The more detail, the safer
+          the next run.
+        </p>
+        <div class="chips">
+          <div class="chip">Avg time: 2 minutes</div>
+          <div class="chip">Photo optional</div>
+          <div class="chip">Community verified</div>
+        </div>
+      </section>
+
+      <section class="split">
+        <div class="form-card">
+          <form>
+            <div>
+              <label for="trail">Trail name</label>
+              <input id="trail" name="trail" type="text" placeholder="Silver Fern Loop" />
+            </div>
+            <div>
+              <label for="region">Region</label>
+              <select id="region" name="region">
+                <option>North Ridge</option>
+                <option>Coastal Bluffs</option>
+                <option>River Valley</option>
+                <option>South Basin</option>
+              </select>
+            </div>
+            <div>
+              <label for="status">Condition status</label>
+              <select id="status" name="status">
+                <option>Good</option>
+                <option>Caution</option>
+                <option>Closed</option>
+              </select>
+            </div>
+            <div>
+              <label for="surface">Surface notes</label>
+              <textarea id="surface" name="surface" placeholder="Hardpack, muddy switchbacks, etc."></textarea>
+            </div>
+            <div>
+              <label for="hazards">Hazards or alerts</label>
+              <input id="hazards" name="hazards" type="text" placeholder="Fallen tree at mile 2" />
+            </div>
+            <div>
+              <label for="time">Time observed</label>
+              <input id="time" name="time" type="time" />
+            </div>
+            <button type="submit">Send report</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Tips for a helpful report</h3>
+          <p>Focus on what changes the effort: water crossings, loose rock, or ice.</p>
+          <p>Add time of day to help others gauge shade and temperature.</p>
+          <p>Call out trail crew activity or closures so runners can reroute.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Thanks for looking out for the community. Your updates keep everyone on
+        route.
+      </p>
+    </footer>
+  </body>
+</html>
