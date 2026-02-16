@@ -1,0 +1,169 @@
+:root {
+        --ink: #0e0f1a;
+        --mist: #f5f2eb;
+        --sun: #ffb703;
+        --lava: #ff6b6b;
+        --mint: #3dd5a8;
+        --ocean: #3a6ea5;
+      }
+
+      body {
+        background: radial-gradient(circle at 15% 20%, #fff0d6 0%, #f5f2eb 40%, #e9f1ff 100%);
+        color: var(--ink);
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .hero.is-bold {
+        background: linear-gradient(120deg, #fff3cc 0%, #ffe1e1 55%, #d6f5ff 100%);
+      }
+
+      .brand-title {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(2.4rem, 3vw + 1.5rem, 4.5rem);
+        letter-spacing: 0.5px;
+      }
+
+      .tag.is-bright {
+        background: var(--sun);
+        color: #1f1200;
+        font-weight: 600;
+      }
+
+      .product-card {
+        border: 1px solid #e6e1d9;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 16px 40px rgba(23, 28, 40, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 50px rgba(23, 28, 40, 0.16);
+      }
+
+      .product-image {
+        border-radius: 16px;
+        background: linear-gradient(135deg, #d6f5ff 0%, #ffe7c2 100%);
+        padding: 24px;
+        text-align: center;
+      }
+
+      .product-image span {
+        font-size: 3.2rem;
+      }
+
+      .pill {
+        border: 1px solid #d8d2c8;
+        border-radius: 999px;
+        padding: 0.35rem 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .deal {
+        color: #000;
+        background: #ffd166;
+        border-radius: 12px;
+        padding: 0.4rem 0.7rem;
+        font-weight: 600;
+        display: inline-flex;
+        gap: 0.35rem;
+        align-items: center;
+      }
+
+      .feature-panel {
+        border-radius: 20px;
+        background: #0e0f1a;
+        color: #f5f2eb;
+        padding: 2rem;
+      }
+
+      .feature-panel strong {
+        color: #ffd166;
+      }
+
+      .floating-blob {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle, rgba(255, 182, 193, 0.8) 0%, rgba(255, 182, 193, 0) 70%);
+        filter: blur(6px);
+        top: -80px;
+        right: -40px;
+        z-index: 0;
+      }
+
+      .section-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 2.2rem;
+      }
+
+      .checkout-panel {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 2rem;
+        border: 1px solid #e4dfd6;
+      }
+
+      .newsletter {
+        background: linear-gradient(135deg, #2d2a5f 0%, #432371 45%, #faae7b 100%);
+        color: #fff;
+        border-radius: 24px;
+        padding: 2.5rem;
+      }
+
+      .newsletter input {
+        border-radius: 999px;
+      }
+
+      .wave {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .wave::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -40px;
+        height: 120px;
+        background: radial-gradient(circle at 20% 10%, rgba(255, 183, 3, 0.35) 0%, rgba(255, 183, 3, 0) 70%);
+        transform: skewY(-3deg);
+      }
+
+      .staggered {
+        animation: fadeUp 0.8s ease both;
+      }
+
+      .staggered:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+
+      .staggered:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+
+      .staggered:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .floating-blob {
+          display: none;
+        }
+      }
