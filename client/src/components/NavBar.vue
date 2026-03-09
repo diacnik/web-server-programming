@@ -31,8 +31,8 @@ const isActive = ref(false);
         Home
       </RouterLink>
 
-      <RouterLink to="/documentation" class="navbar-item">
-        Documentation
+      <RouterLink to="/products" class="navbar-item">
+        Products
       </RouterLink>
 
       <div class="navbar-item has-dropdown is-hoverable">
@@ -43,9 +43,6 @@ const isActive = ref(false);
         <div class="navbar-dropdown">
           <RouterLink to="/about" class="navbar-item">
             About
-          </RouterLink>
-          <RouterLink to="/jobs" class="navbar-item is-selected">
-            Jobs
           </RouterLink>
           <RouterLink to="/contact" class="navbar-item">
             Contact
