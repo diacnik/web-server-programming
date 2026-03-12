@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import NavBar from './components/NavBar.vue';
 </script>
 
@@ -11,7 +10,7 @@ import NavBar from './components/NavBar.vue';
   <div class="container">
     <RouterView />
   </div>
-  
+
 </template>
 
 <style scoped></style>
