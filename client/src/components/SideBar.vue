@@ -8,10 +8,7 @@ const props = defineProps<{
 
 <template>
   <div class="side-bar" :class="{ 'is-Active': false }" :style="{ width: props.width + 'px' }">
-    <div class="temp">
-      <h2 class="title is-4">Shopping Cart</h2>
-      <p>Your cart is empty.</p>
-    </div>
+    <slot ></slot>
 
   </div>
 </template>
@@ -20,9 +17,9 @@ const props = defineProps<{
 .side-bar {
   width: 250px;
   position: fixed;
-  top: 0;
+  top: 56px; /* Adjust if you have a fixed header */
   right: 0;
-  height: 100%;
+  height: calc(100% - 56px);
   border-left: 1px solid #ddd;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transform: translateX(90%);
@@ -32,11 +29,6 @@ const props = defineProps<{
 .side-bar:hover,
 .side-bar.is-Active {
   transform: translateX(0);
-}
-
-.temp {
-  padding: 1rem;
-  background-color: aliceblue;
 }
 
 </style>
