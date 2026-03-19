@@ -8,7 +8,7 @@ const products = useProductStore();
 const cart = useCartStore();
 
 function addToCart(productId: number) {
-  cart.addItem(productId);
+  cart.addToCart(productId, 1);
 }
 </script>
 
@@ -26,7 +26,7 @@ function addToCart(productId: number) {
       </div>
     </div>
   </div>
-  <SideBar :width="300" >
+  <SideBar :width="300" class="sidebar">
    <ShoppingCart />
   </SideBar>
 
@@ -36,6 +36,15 @@ function addToCart(productId: number) {
 .add-button {
   float: right;
   margin-bottom: 1rem;
+}
+
+.subtitle {
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.sidebar {
+  background-color: white;
 }
 
 </style>

@@ -14,7 +14,7 @@ const cart = useCartStore();
         Product ID: {{ item.productId }} - Quantity: {{ item.quantity }}
       </li>
     </ul>
-    <p v-if="cart.items.length > 0" class="total">Total Items: {{ cart.items.reduce((total, item) => total + item.quantity, 0 ) }}</p>
+    <p v-if="cart.items.length > 0" class="total">Total: ${{ cart.totalPrice.toFixed(2) }}</p>
 
   </div>
 </template>

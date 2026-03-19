@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { Product } from "../types";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useProductStore } from "./products";
 
 export type CartItem = {
@@ -44,11 +44,23 @@ export const useCartStore = defineStore("cart", () => {
     items.value = [];
   }
 
+const count = computed(() => {
+  return items.value.reduce((total, item) => total + item.quantity, 0);
+});
+const totalPrice = computed(() => {
+  return items.value.reduce((total, item) => {
+    const product = productStore.products.find((p) => p.id === item.id);
+    return total + (product ? product.price * item.quantity : 0);
+  }, 0);
+});
+
   return {
     items,
     addToCart,
     removeFromCart,
     clearCart,
     isCartSideBarOpen,
+    count,
+    totalPrice
   };
 });
