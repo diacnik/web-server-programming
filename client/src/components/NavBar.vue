@@ -8,7 +8,6 @@ const isActive = ref(false);
 const cartStore = useCartStore();
 
 function toggleCart() {
-  // Implement cart toggle logic here
   console.log('Cart toggled');
   cartStore.isCartSideBarOpen = !cartStore.isCartSideBarOpen;
 }
@@ -65,13 +64,13 @@ function toggleCart() {
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <a @click="toggleCart" class="button is-light">
-        <a>
-          <span class="tag is-danger is-normal is-round">{{ cartStore.count }}</span>
+        <a @click="toggleCart">
+          <span class="tag is-danger is-normal is-round count" v-if="cartStore.count">
+            {{ cartStore.count }}
+          </span>
           <span class="icon">
             <i class="fas fa-shopping-cart"></i>
           </span>
-        </a>
         </a>
       </div>
       <div class="navbar-item">

@@ -9,8 +9,7 @@ const props = defineProps<{
 
 <template>
   <div class="side-bar" :class="{ 'is-Active': props.isActive }" :style="{ width: props.width + 'px' }">
-    <slot ></slot>
-
+    <slot />
   </div>
 </template>
 
