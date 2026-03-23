@@ -26,7 +26,7 @@ function addToCart(productId: number) {
       </div>
     </div>
   </div>
-  <SideBar :width="300" class="sidebar">
+  <SideBar :width="300" :is-active="cart.isCartSideBarOpen" class="sidebar">
    <ShoppingCart />
   </SideBar>
 
