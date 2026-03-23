@@ -9,7 +9,8 @@ const app = express();
 // pipeline
 app.get("/", (_req, res) => {
   res.send("Hello, World!");
-}).get("/suny", (_req, res) => {
+})
+.get("/suny", (_req, res) => {
   res.send("The best plan of my life!");
 })
 .use("/users", usersController);
