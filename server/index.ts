@@ -7,13 +7,14 @@ const SERVER = `localhost`;
 const app = express();
 
 // pipeline
-app.get("/", (_req, res) => {
-  res.send("Hello, World!");
-})
-.get("/suny", (_req, res) => {
-  res.send("The best plan of my life!");
-})
-.use("/users", usersController);
+app
+  .get("/", (_req, res) => {
+    res.send("Hello, World!");
+  })
+  .get("/suny", (_req, res) => {
+    res.send("The best plan of my life!");
+  })
+  .use("/users", usersController); // use is a catch all method, all path, and all query params that start with /users
 
 // callback
 app.listen(PORT, () => {
