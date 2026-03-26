@@ -1,11 +1,11 @@
 import type { User } from "../types";
 import data from "../data/users.json";
 
-export function getAll() {
+export function getAll(): User[] {
     return data.users as User[];
 }
 
-export function get(id: number) {
+export function get(id: number): User {
     const user = data.users.find((user: { id: number; }) => user.id === id);
     if (!user) {
         throw new Error(`User with id ${id} not found`);
@@ -13,11 +13,10 @@ export function get(id: number) {
     return user as User;
 }
 
-export function create(name: string, email: string) {
+export function create(user: User) {
     const newUser = {
-        id: data.users.length + 1,
-        name,
-        email,
+        ...user,
+        id: data.users.length > 0 ? data.users[data.users.length - 1].id + 1 : 1 // assign a new id based on the last user's id
     };
     data.users.push(newUser as any);
     return newUser;
