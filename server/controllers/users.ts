@@ -11,13 +11,17 @@ app
     }));
     res.send(users);
 })
+.get("/count", (_req, res) => {
+    const count = getAll().length;
+    res.send({ count });
+})
 .get("/:id", (_req, res) => {
     const { id } = _req.params;
     const user = get(parseInt(id));
     res.send(user);
 })
 .post("/", (_req, res) => {
-    const newUser = create(_req.body.name, _req.body.email);
+    const newUser = create(_req.body);
     res.send(newUser);
 })
 .patch("/:id", (req, res) => {
