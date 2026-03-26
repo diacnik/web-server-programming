@@ -1,35 +1,34 @@
 import { Router } from "express";
+import { getAll, get, create, update, remove } from "../models/users";
 
 const app = Router();
 
 app
 .get("/", (_req, res) => {
-    res.send([
-        { id: 1, name: "Alice", email: "alice@example.com" },
-        { id: 2, name: "Bob", email: "bob@example.com" },
-        { id: 3, name: "Charlie", email: "charlie@example.com" },
-    ])
+    const users = getAll().map((x) => ({
+        ...x,
+        password: undefined, // remove password field from the response
+    }));
+    res.send(users);
 })
 .get("/:id", (_req, res) => {
     const { id } = _req.params;
-    res.send({ id, name: "Alice", email: "alice@example.com" });
+    const user = get(parseInt(id));
+    res.send(user);
 })
 .post("/", (_req, res) => {
-    const { name, email } = _req.body
-    // In a real application, you would save the user to the database here
-    res.send({ id: 4, name, email });
+    const newUser = create(_req.body.name, _req.body.email);
+    res.send(newUser);
 })
 .patch("/:id", (req, res) => {
     const { id } = req.params;
-    const { name, email } = req.body;
-    // In a real application, you would update the user in the database here
-    res.send({ id, name, email });
+    const updatedUser = update(parseInt(id), req.body);
+    res.send(updatedUser);
 })
 .delete("/:id", (req, res) => {
     const { id } = req.params;
-    // In a real application, you would delete the user from the database here
-    res.send({ id });
+    const removedUser = remove(parseInt(id));
+    res.send(removedUser);
 });
-
 
 export default app;

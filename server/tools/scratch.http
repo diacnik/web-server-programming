@@ -16,3 +16,10 @@ POST http://localhost:3000/
 
 ###
 POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "firstName": "David",
+    "lastName": "Smith",
+    "email": "david@example.com"
+}

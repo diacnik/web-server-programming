@@ -6,6 +6,8 @@ const SERVER = `localhost`;
 
 const app = express();
 
+app.use(express.json()); // Middleware to parse JSON bodies
+
 // pipeline
 app
   .get("/", (_req, res) => {
