@@ -9,6 +9,12 @@ GET http://localhost:3000/suny
 GET http://localhost:3000/users
 
 ###
+GET http://localhost:3000/users?firstName=John
+
+###
+GET http://localhost:3000/users/count
+
+###
 GET http://localhost:3000/users/1
 
 ###
@@ -22,4 +28,15 @@ Content-Type: application/json
     "firstName": "David",
     "lastName": "Smith",
     "email": "david@example.com"
+}
+
+###
+DELETE http://localhost:3000/users/31
+
+###
+PATCH http://localhost:3000/users/31
+Content-Type: application/json
+
+{
+    "lastName": "Johnson"
 }

@@ -1,38 +1,61 @@
 import { Router } from "express";
 import { getAll, get, create, update, remove } from "../models/users";
+import { User, DataEnvelope, DataListEnvelope } from "../types";
 
 const app = Router();
 
 app
-.get("/", (_req, res) => {
-    const users = getAll().map((x) => ({
+.get("/", (req, res) => {
+    const { users, count } = getAll(req.query);
+    const sanitizedUsers = users.map((x) => ({
         ...x,
-        password: undefined, // remove password field from the response
+        password: undefined
     }));
-    res.send(users);
+    const response: DataListEnvelope<User> = {
+        data: sanitizedUsers,
+        isSuccess: true,
+        total: count,
+    };
+    res.send(response);
 })
-.get("/count", (_req, res) => {
-    const count = getAll().length;
+.get("/count", (req, res) => {
+    const { count } = getAll(req.query);
     res.send({ count });
 })
-.get("/:id", (_req, res) => {
-    const { id } = _req.params;
-    const user = get(parseInt(id));
-    res.send(user);
+.get("/:id", (req, res) => {
+    const { id } = req.params;
+    const response: DataEnvelope<User> = {
+        data: get(Number(id)),
+        isSuccess: true,
+    };
+    res.send(response);
 })
-.post("/", (_req, res) => {
-    const newUser = create(_req.body);
-    res.send(newUser);
+.post("/", (req, res) => {
+    const newUser = create(req.body);
+    const response: DataEnvelope<User> = {
+        data: newUser,
+        isSuccess: true,
+    };
+    res.send(response);
 })
 .patch("/:id", (req, res) => {
     const { id } = req.params;
-    const updatedUser = update(parseInt(id), req.body);
-    res.send(updatedUser);
+    const updatedUser = update(Number(id), req.body);
+    const response: DataEnvelope<User> = {
+        data: updatedUser as User,
+        isSuccess: true,
+    };
+    res.send(response);
 })
 .delete("/:id", (req, res) => {
     const { id } = req.params;
-    const removedUser = remove(parseInt(id));
-    res.send(removedUser);
+    const removedUser = remove(Number(id));
+    const response: DataEnvelope<User> = {
+        data: removedUser,
+        isSuccess: true,
+        message: `User ${removedUser.firstName} ${removedUser.lastName} has been removed.`,
+    };
+    res.send(response);
 });
 
 export default app;
