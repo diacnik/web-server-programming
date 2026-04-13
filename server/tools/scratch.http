@@ -37,3 +37,6 @@ Content-Type: application/json
 {
     "lastName": "Johnson"
 }
+
+###
+GET http://localhost:3000/api/v1/products
