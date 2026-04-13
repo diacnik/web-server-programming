@@ -1,5 +1,6 @@
 import express from "express"; // Importing from node_modules
 import usersController from "./controllers/users"; // Importing from local file
+import productsController from "./controllers/products"; // Importing from local file
 import { DataEnvelope } from "./types";
 
 const PORT = 3000;
@@ -19,6 +20,7 @@ app
 
 // mappings
 // pipeline
+// Routes
 app
   .get("/", (_req, res) => {
     res.send("Hello, World!");
@@ -26,8 +28,8 @@ app
   .get("/suny", (_req, res) => {
     res.send("The best plan of my life!");
   })
-  .use("/api/v1/users", usersController); // use is a catch all method, all path, and all query params that start with /users
-
+  .use("/api/v1/users", usersController) // use is a catch all method, all path, and all query params that start with /users
+  .use("/api/v1/products", productsController); // use is a catch all method, all path, and all query params that start with /products
 // Error handling
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   
