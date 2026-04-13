@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { Product } from "../types";
+import type { Product } from "../../../server/types";
 import { computed, ref } from "vue";
 import { useProductStore } from "./products";
 

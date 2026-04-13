@@ -7,7 +7,15 @@ const SERVER = `localhost`;
 
 const app = express();
 
-app.use(express.json()); // Middleware to parse JSON bodies
+// Middleware
+app
+.use((_req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  next(); // Call the next middleware or route handler
+})
+.use(express.json()); // Middleware to parse JSON bodies
 
 // mappings
 // pipeline
@@ -18,7 +26,7 @@ app
   .get("/suny", (_req, res) => {
     res.send("The best plan of my life!");
   })
-  .use("/users", usersController); // use is a catch all method, all path, and all query params that start with /users
+  .use("/api/v1/users", usersController); // use is a catch all method, all path, and all query params that start with /users
 
 // Error handling
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
