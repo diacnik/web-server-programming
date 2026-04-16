@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue';
+import useSessionStore from './stores/session';
+const sessionStore = useSessionStore();
+
 </script>
 
 <template>
@@ -8,6 +11,7 @@ import NavBar from './components/NavBar.vue';
   <NavBar />
 
   <div class="container">
+    <progress class="progress is-primary" v-if="sessionStore.isLoading"></progress>
     <RouterView />
   </div>
 
