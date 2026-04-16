@@ -14,10 +14,10 @@ export const useSessionStore = defineStore("session", () => {
   const loadingCount = ref(0);
   const isLoading = computed(() => loadingCount.value > 0);
 
-  function api(endpoint: string) {
+  function api(endpoint: string, data?: unknown, options: RequestInit = {}) {
     loadingCount.value++; // puts it into a loading state
 
-    return myApi(endpoint).finally(() => {
+    return myApi(endpoint, data, options).finally(() => {
       loadingCount.value--; // decrements when the request is done, whether it succeeded or failed
     });
   }
