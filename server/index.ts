@@ -3,9 +3,13 @@ import usersController from "./controllers/users"; // Importing from local file
 import productsController from "./controllers/products"; // Importing from local file
 import cartController from "./controllers/cart"; // Importing from local file
 import { DataEnvelope } from "./types";
+import { config } from "dotenv";
 
-const PORT = 3000;
-const SERVER = `localhost`;
+config();
+
+const PORT = process.env.PORT ?? 3000;
+const SERVER = process.env.SERVER ?? `localhost`;
+const STATIC_DIR = process.env.STATIC_DIR ?? "client/dist";
 
 const app = express();
 
