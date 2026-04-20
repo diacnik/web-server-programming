@@ -21,6 +21,7 @@ export const useCartStore = defineStore("cart", () => {
       items.value = response.data;
     });
   }
+  loadCart();
 
   function addItem(productId: number) {
     const item = items.value.find((item) => item.product.id === productId);

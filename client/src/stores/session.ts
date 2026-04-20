@@ -6,18 +6,36 @@ import type { User } from "../../../server/types";
 
 import { api as myApi } from "../services/myFetch";
 
+export type FeedbackMessage = {
+  type: "success" | "danger" | "info";
+  text: string;
+};
+
 export const useSessionStore = defineStore("session", () => {
   const user = ref<User | null>(null);
 
-  const messages = ref<string[]>([]);
+  const messages = ref<FeedbackMessage[]>([]);
+  function addMessage(text: string, type: FeedbackMessage['type'] = 'info') {
+    messages.value.push({ type, text })
+  }
+  function handleError(error: Error | string) {
+    const message = typeof error === 'string' ? error : error.message
+    addMessage(message, 'danger')
+    console.error(error)
+  }
 
   const loadingCount = ref(0);
   const isLoading = computed(() => loadingCount.value > 0);
 
-  function api(endpoint: string, data?: unknown, options: RequestInit = {}) {
+  function api<T>(endpoint: string, data?: unknown, options: RequestInit = {}) {
     loadingCount.value++; // puts it into a loading state
 
-    return myApi(endpoint, data, options).finally(() => {
+    return myApi<T>(endpoint, data, options)
+    .catch((error) => {
+      handleError(error);
+      throw error; // re-throw the error so that the caller can also handle it if needed
+    })
+    .finally(() => {
       loadingCount.value--; // decrements when the request is done, whether it succeeded or failed
     });
   }
@@ -25,6 +43,8 @@ export const useSessionStore = defineStore("session", () => {
   return {
     user,
     messages,
+    addMessage,
+    handleError,
     isLoading,
     api,
   };
