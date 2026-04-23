@@ -5,8 +5,8 @@ import { Product, DataEnvelope, DataListEnvelope } from "../types";
 const app = Router();
 
 app
-.get("/", (req, res) => {
-    const { list, count } = getAll(req.query);
+.get("/", async (req, res) => {
+    const { list, count } = await getAll(req.query);
     const response: DataListEnvelope<Product> = {
         data: list,
         isSuccess: true,
@@ -14,38 +14,39 @@ app
     };
     res.send(response);
 })
-.get("/count", (req, res) => {
-    const { count } = getAll(req.query);
+.get("/count", async (req, res) => {
+    const { count } = await getAll(req.query);
     res.send({ count });
 })
-.get("/:id", (req, res) => {
+.get("/:id", async (req, res) => {
     const { id } = req.params;
+    const item = await get(Number(id));
     const response: DataEnvelope<Product> = {
-        data: get(Number(id)),
+        data: item,
         isSuccess: true,
     };
     res.send(response);
 })
-.post("/", (req, res) => {
-    const newItem = create(req.body);
+.post("/", async (req, res) => {
+    const newItem = await create(req.body);
     const response: DataEnvelope<Product> = {
         data: newItem,
         isSuccess: true,
     };
     res.send(response);
 })
-.patch("/:id", (req, res) => {
+.patch("/:id", async (req, res) => {
     const { id } = req.params;
-    const updatedItem = update(Number(id), req.body);
+    const updatedItem = await update(Number(id), req.body);
     const response: DataEnvelope<Product> = {
         data: updatedItem as Product,
         isSuccess: true,
     };
     res.send(response);
 })
-.delete("/:id", (req, res) => {
+.delete("/:id", async (req, res) => {
     const { id } = req.params;
-    const removedItem = remove(Number(id));
+    const removedItem = await remove(Number(id));
     const response: DataEnvelope<Product> = {
         data: removedItem,
         isSuccess: true,
