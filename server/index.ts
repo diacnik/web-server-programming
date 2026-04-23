@@ -8,8 +8,8 @@ import { config } from "dotenv";
 config();
 
 const PORT = process.env.PORT ?? 3000;
-const SERVER = process.env.SERVER ?? `localhost`;
-const STATIC_DIR = process.env.STATIC_DIR ?? "client/dist";
+const SERVER = process.env.SERVER ?? "localhost";
+const STATIC_DIR = process.env.STATIC_DIR ?? "client/dist"; // working directory is server, so we need to go up one level to access client/dist
 
 const app = express();
 
@@ -27,12 +27,7 @@ app
 // pipeline
 // Routes
 app
-  .get("/", (_req, res) => {
-    res.send("Hello, World!");
-  })
-  .get("/suny", (_req, res) => {
-    res.send("The best plan of my life!");
-  })
+  .use(express.static(STATIC_DIR)) // Serve static files from the specified directory
   .use("/api/v1/users", usersController) // use is a catch all method, all path, and all query params that start with /users
   .use("/api/v1/products", productsController) // use is a catch all method, all path, and all query params that start with /products
   .use("/api/v1/cart", cartController); // use is a catch all method, all path, and all query params that start with /cart
@@ -43,7 +38,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
   const response: DataEnvelope<null> = {
     data: null,
     isSuccess: false,
-    message: err.message,
+    message: err.message ?? "An error occurred",
   };
   res.status((err as any).status ?? 500).send(response);
 });
