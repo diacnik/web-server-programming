@@ -1,16 +1,12 @@
+import useSessionStore from '../stores/session'
+import type { DataListEnvelope, Product } from '../../../server/types'
 
-import { defineStore } from "pinia";
+export function getProducts() {
+  const session = useSessionStore()
+  return session.api<DataListEnvelope<Product>>('products')
+}
 
-import type { DataListEnvelope, Product } from "../../../server/types";
-import useSessionStore from "../stores/session";
-import { ref } from "vue/dist/vue.js";
-
-
-export const useProductsStore = defineStore("products", () => {
-  getProducts().then((data) => {
-    products.value = data.data;
-  });
-  const products = ref<Product[]>([]);
-
-  return { products };
-});
+export function getProduct(id: number) {
+  const session = useSessionStore()
+  return session.api<Product>(`products/${id}`)
+}

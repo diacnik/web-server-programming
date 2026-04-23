@@ -1,15 +1,14 @@
-import { defineStore } from "pinia";
-import type { DataListEnvelope, Product } from "../../../server/types"; // in smaller project, import types directly from server
-import { ref } from "vue";
-import { api } from "../services/myFetch";
+import { defineStore } from 'pinia'
+import type { DataListEnvelope, Product, User } from '../../../server/types'
+import { ref } from 'vue'
+import { getProducts } from '@/services/products'
 
-export const useProductStore = defineStore("products", () => {
+export const useProductsStore = defineStore('products', () => {
+  getProducts().then((data) => {
+    products.value = data.data
+  })
 
-  api<DataListEnvelope<Product>>("/products").then((data) => {
-    products.value = data.data;
-  });
-  const products = ref<Product[]>([]);
+  const products = ref<Product[]>([])
 
-  return { products };
-
-});
+  return { products }
+})
