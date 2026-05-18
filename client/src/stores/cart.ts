@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import type { DataListEnvelope, Product } from "../../../server/types";
-import { computed, ref } from "vue";
-import { useProductStore } from "./products";
+import type { DataEnvelope, DataListEnvelope, Product } from "../../../server/types";
+import { computed, ref, watch } from "vue";
+import { useProductsStore } from "./products";
 import { useSessionStore } from "./session";
 
 export type CartItem = {
@@ -13,43 +13,69 @@ export const useCartStore = defineStore("cart", () => {
   const items = ref<CartItem[]>([]);
   const isCartSideBarOpen = ref(false);
 
-  const productStore = useProductStore();
+  const productStore = useProductsStore();
   const sessionStore = useSessionStore();
 
   function loadCart() {
-    sessionStore.api<DataListEnvelope<CartItem>>(`cart/${sessionStore.user?.id ?? 1}`).then((response) => {
+    sessionStore.api<DataListEnvelope<CartItem>>(`cart`).then((response) => {
       items.value = response.data;
     });
   }
-  loadCart();
+  watch(() => sessionStore.user, () => {
+    if (sessionStore.user) {
+      loadCart();
+    } else {
+      items.value = [];
+    }
+  }, { immediate: true
+  });
 
   function addItem(productId: number) {
+    updateItem(productId, 1);
+  }
+
+  function updateItem(productId: number, quantity: number = 1) {
+    saveChangesToCartItem(productId, quantity)
+
     const item = items.value.find((item) => item.product.id === productId);
     if (item) {
-      item.quantity++;
+      item.quantity += quantity;
       return;
     }
 
     const product = productStore.products.find((p) => p.id === productId);
     if (product) {
-      items.value.push({ product, quantity: 1 });
+      items.value.push({ product, quantity });
     }
   }
 
+  function saveChangesToCartItem(productId: number, quantity: number) {
+    sessionStore.api<DataEnvelope<CartItem>>(`cart`, { productId, quantity }).then((response) => {
+      if (response.message) {
+        sessionStore.addMessage(response.message, response.isSuccess ? 'info' : 'danger');
+      }
+    });
+  }
+  watch(() => items.value.map((item) => ({ ...item })), (newItems, oldItems) => {
+    for (const newItem of newItems) {
+      const oldItem = oldItems.find((item) => item.product.id === newItem.product.id);
+      if (oldItem && oldItem.quantity !== newItem.quantity) {
+        saveChangesToCartItem(newItem.product.id, newItem.quantity - (oldItem.quantity ?? 0));
+      }
+    }
+  }, { deep: true });
+
   function removeItem(productId: number) {
     items.value = items.value.filter((item) => item.product.id !== productId);
+    saveChangesToCartItem(productId, 0);
   }
 
   function clearCart() {
     items.value = [];
   }
 
-const count = computed(() =>
-  items.value.reduce((total, item) => total + item.quantity, 0)
-);
-const totalPrice = computed(() =>
-  items.value.reduce((total, item) => total + item.product.price * item.quantity, 0)
-);
+  const count = computed(() => items.value.reduce((total, item) => total + item.quantity, 0));
+  const totalPrice = computed(() => items.value.reduce((total, item) => total + item.product.price * item.quantity, 0));
 
   return {
     items,

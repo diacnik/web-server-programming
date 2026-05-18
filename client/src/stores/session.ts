@@ -2,7 +2,7 @@
 
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import type { User } from "../../../server/types";
+import type { DataEnvelope, User } from "../../../server/types";
 
 import { api as myApi } from "../services/myFetch";
 
@@ -13,6 +13,18 @@ export type FeedbackMessage = {
 
 export const useSessionStore = defineStore("session", () => {
   const user = ref<User | null>(null);
+  const token = ref<string | null>(null);
+
+  async function login(email: string, password: string) {
+    const response = await myApi<DataEnvelope<{ token: string; user: User }>>('users/login', { email, password }, { method: 'POST' });
+    user.value = response.data.user;
+    token.value = response.data.token;
+  }
+
+  function logout() {
+    user.value = null;
+    token.value = null;
+  }
 
   const messages = ref<FeedbackMessage[]>([]);
   function addMessage(text: string, type: FeedbackMessage['type'] = 'info') {
@@ -30,14 +42,27 @@ export const useSessionStore = defineStore("session", () => {
   function api<T>(endpoint: string, data?: unknown, options: RequestInit = {}) {
     loadingCount.value++; // puts it into a loading state
 
+    options.headers = {
+      'Content-Type': 'application/json',
+      ...(token.value ? { 'Authorization': `Bearer ${token.value}` } : {}),
+      ...options.headers,
+    }
+
     return myApi<T>(endpoint, data, options)
-    .catch((error) => {
-      handleError(error);
-      throw error; // re-throw the error so that the caller can also handle it if needed
-    })
-    .finally(() => {
-      loadingCount.value--; // decrements when the request is done, whether it succeeded or failed
-    });
+      .then((res) => {
+          const response = res as { message?: string };
+          if (response && typeof response === 'object' && 'message' in response && response.message) {
+            addMessage(response.message, 'success')
+          }
+          return res
+        })
+        .catch((error) => {
+          handleError(error)
+          throw error
+        })
+        .finally(() => {
+          loadingCount.value--
+        });
   }
 
   return {
@@ -47,6 +72,9 @@ export const useSessionStore = defineStore("session", () => {
     handleError,
     isLoading,
     api,
+    token,
+    logout,
+    login
   };
 });
 

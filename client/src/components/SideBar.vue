@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="side-bar" :class="{ 'is-Active': props.isActive }" :style="{ width: props.width + 'px' }">
+  <div class="side-bar" :class="{ 'is-active': props.isActive }" :style="{ width: props.width + 'px' }">
     <slot />
   </div>
 </template>
@@ -27,7 +27,7 @@ const props = defineProps<{
 }
 
 .side-bar:hover,
-.side-bar.is-Active {
+.side-bar.is-active {
   transform: translateX(0);
 }
 
