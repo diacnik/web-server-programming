@@ -45,30 +45,44 @@ export type UserAddress = {
   country: string;
 };
 
+export const userAddressKeys: (keyof UserAddress)[] = [
+  "address",
+  "city",
+  "state",
+  "stateCode",
+  "postalCode",
+  "country",
+];
+
 export type UserRole = "admin" | "moderator" | "user";
 
 export type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  email: string;
-  phone: string;
-  birthDate: string;
-  image: string;
-  address: UserAddress;
-  role: UserRole;
+  id?: number
+  firstName: string
+  lastName: string
+  gender?: string
+  email: string
+  phone?: string
+  birthDate?: string
+  image?: string
+  role?: UserRole
+  address?: string
+  city?: string
+  state?: string
+  stateCode?: string
+  postalCode?: string
+  country?: string
 };
 
-export const userKeys = [
-    "firstName",
-    "lastName",
-    "gender",
-    "email",
-    "phone",
-    "birthDate",
-    "image",
-    "role",
+export const userKeys: (keyof User)[] = [
+  "firstName",
+  "lastName",
+  "gender",
+  "email",
+  "phone",
+  "birthDate",
+  "image",
+  "role",
 ];
 
 export type UsersResponse = {
