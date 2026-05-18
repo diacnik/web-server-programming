@@ -16,13 +16,16 @@ app
 })
 .get("/count", async (req, res) => {
     const { count } = await getAll(req.query);
-    res.send({ count });
+    const response: DataEnvelope<{ count: number }> = {
+        data: { count },
+        isSuccess: true,
+    };
+    res.send(response);
 })
 .get("/:id", async (req, res) => {
     const { id } = req.params;
-    const item = await get(Number(id));
     const response: DataEnvelope<Product> = {
-        data: item,
+        data: await get(Number(id)),
         isSuccess: true,
     };
     res.send(response);
@@ -39,7 +42,7 @@ app
     const { id } = req.params;
     const updatedItem = await update(Number(id), req.body);
     const response: DataEnvelope<Product> = {
-        data: updatedItem as Product,
+        data: updatedItem,
         isSuccess: true,
     };
     res.send(response);
