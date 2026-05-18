@@ -20,6 +20,16 @@ export type Product = {
   images: string[];
   thumbnail: string;
 };
+export const productKeys: (keyof Product)[] = [
+    "title",
+    "description",
+    "category",
+    "price",
+    "tags",
+    "brand",
+    "images",
+    "thumbnail",
+];
 
 export type CartItem = {
   product: Product;
@@ -49,6 +59,17 @@ export type User = {
   address: UserAddress;
   role: UserRole;
 };
+
+export const userKeys = [
+    "firstName",
+    "lastName",
+    "gender",
+    "email",
+    "phone",
+    "birthDate",
+    "image",
+    "role",
+];
 
 export type UsersResponse = {
   users: User[];
