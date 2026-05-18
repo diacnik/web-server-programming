@@ -22,7 +22,7 @@ export default function rest<T>(
           throw new Error(data.message || "An error occurred");
         });
       }
-      res.text().then((text) => {
+      return res.text().then((text) => {
         throw new Error(text);
       });
     }
