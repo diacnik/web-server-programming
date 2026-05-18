@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import ShoppingCart from '@/components/ShoppingCart.vue';
 import SideBar from '@/components/SideBar.vue';
-import { useProductStore } from '@/stores/products';
+import { useProductsStore } from '@/stores/products';
 import { useCartStore } from '@/stores/cart';
 
-const products = useProductStore();
+const products = useProductsStore();
 const cart = useCartStore();
 
 function addToCart(productId: number) {
@@ -27,7 +27,7 @@ function addToCart(productId: number) {
     </div>
   </div>
   <SideBar :width="300" :is-active="cart.isCartSideBarOpen" class="sidebar">
-   <ShoppingCart />
+    <ShoppingCart />
   </SideBar>
 
 </template>
