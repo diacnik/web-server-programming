@@ -38,6 +38,15 @@ export function get(id: number): ItemType {
         return item as ItemType;
     }
 
+export async function login(email: string, password: string): Promise<ItemType( token: string; user: ItemType )> {
+    const db = connect();
+    const result = await db.from(TABLE_NAME).select("*").eq("email", email).single();
+    if (result.error) {
+        throw error;
+    }
+    const user = toCamelCase(result.data) as ItemType; 
+}
+
 export function create(user: User) {
     const newItemType = {
         ...user,
