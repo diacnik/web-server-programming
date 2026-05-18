@@ -1,7 +1,7 @@
-import type { Product } from "../types";
+import { productKeys, type Product } from "../types";
 import data1 from "../data/products.json";
 import { PagingRequest } from "../types/dataEnvelopes";
-import { connect, toCamelCase, toSnakeCase } from "./supabase";
+import { connect, filterKeys, toCamelCase, toSnakeCase } from "./supabase";
 
 export const TABLE_NAME = "products";
 
@@ -90,4 +90,16 @@ export async function remove(id: number) {
     }
 
     return toCamelCase(result.data) as ItemType;
+}
+
+export async function seed() {
+    const db = connect();
+    const items = data.items.map((item) => toSnakeCase(filterKeys(item, productKeys)));
+    const result = await db.from(TABLE_NAME).insert(items);
+
+    if (result.error) {
+        throw result.error;
+    }
+
+    return result.count;
 }

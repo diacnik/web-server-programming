@@ -9,7 +9,8 @@ export const TABLE_NAME = "users";
 
 type ItemType = User;
 const data = {
-    items: data1, // data1 is already the array of users from the JSON file
+    ...data1,
+    items: data1.users,
 }
 
 export async function getAll(params: PagingRequest) {
@@ -109,4 +110,17 @@ export async function remove(id: number): Promise<ItemType> {
     }
 
     return toCamelCase(result.data) as ItemType;
+}
+
+export async function seed() {
+    const db = connect();
+    const items = data.items.map((item) => ({
+        ...toSnakeCase(filterKeys(item, userKeys as any)),
+    }));
+    const result = await db.from(TABLE_NAME).insert(items);
+
+    if (result.error) {
+        throw result.error;
+    }
+    return result.count;
 }

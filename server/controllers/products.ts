@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAll, get, create, update, remove } from "../models/products";
+import { getAll, get, create, update, remove, seed } from "../models/products";
 import { Product, DataEnvelope, DataListEnvelope } from "../types";
 
 const app = Router();
@@ -54,6 +54,15 @@ app
         data: removedItem,
         isSuccess: true,
         message: `Product ${removedItem.title} has been removed.`,
+    };
+    res.send(response);
+})
+.post("/seed", async (_req, res) => {
+    await seed();
+    const response: DataEnvelope<null> = {
+        data: null,
+        isSuccess: true,
+        message: "Products have been seeded.",
     };
     res.send(response);
 });
